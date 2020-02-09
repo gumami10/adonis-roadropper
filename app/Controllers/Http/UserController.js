@@ -53,12 +53,13 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, auth }) {
 
     const data = request.post()
     const user = await User.create({ ...data })
-    response.header()
-    return user
+
+    const token = await auth.attempt(data.email, data.password)
+    return token
 
   }
 
