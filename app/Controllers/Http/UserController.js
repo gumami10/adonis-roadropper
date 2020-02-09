@@ -41,7 +41,9 @@ class UserController {
 
     const token = await auth.attempt(email, password)
 
-    return token
+    const user = await User.findBy('email', email)
+
+    return {token, user: { username: user.username, email: user.email, description: user.description }}
 
   }
 
@@ -59,6 +61,7 @@ class UserController {
     const user = await User.create({ ...data })
 
     const token = await auth.attempt(data.email, data.password)
+
     return token
 
   }

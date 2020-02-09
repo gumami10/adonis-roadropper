@@ -20,3 +20,7 @@ Route.group(() => {
   Route.resource("", "UserController").apiOnly();
   Route.post("login", "UserController.login");
 }).prefix("users")
+
+Route.group(() => {
+  Route.resource("", "RoadmapController").apiOnly();
+}).prefix("roadmap")
