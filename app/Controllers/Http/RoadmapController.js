@@ -19,24 +19,11 @@ class RoadmapController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index () {
 
-    const roadmaps = await Roadmap.all()
+    const roadmaps = await Roadmap.query().orderBy('id', 'desc').fetch()
 
     return roadmaps
-
-  }
-
-  /**
-   * Render a form to be used for creating a new roadmap.
-   * GET roadmaps/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
 
   }
 
@@ -48,9 +35,9 @@ class RoadmapController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
     const data = request.post()
-    const roadmap = await Roadmap.create({ ...data })
+    const roadmap = await Roadmap.create({ ...data, moderation: 0, creator: 0, category: 'others', subject: 'Other' })
     return roadmap
 
   }

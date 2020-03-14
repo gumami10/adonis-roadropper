@@ -2,6 +2,8 @@
 
 /** @type {import('@adonisjs/framework/src/Env')} */
 const Env = use('Env')
+const moment = use('moment')
+moment.locale('pt-br')
 
 module.exports = {
 
@@ -173,7 +175,7 @@ module.exports = {
     | based on HTTP headers/query string.
     |
     */
-    locale: 'en'
+    locale: 'pt'
   },
 
   logger: {

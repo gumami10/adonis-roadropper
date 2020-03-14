@@ -8,7 +8,7 @@ class RoadmapSchema extends Schema {
     this.create('roadmaps', (table) => {
       table.increments()
       table
-        .string('name', 80)
+        .string('title', 80)
         .notNullable()
       table
         .string('subject', 60)
@@ -24,11 +24,22 @@ class RoadmapSchema extends Schema {
         .defaultTo(0)
         .notNullable()
       table
+        .string('links', 1200)
+      table
+        .string('target', 1200)
+      table
         .int('creator', 60)
         .notNullable()
         .unsigned()
         .references('id')
         .inTable('users')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+      table
+        .string('category', 30)
+        .notNullable()
+        .references('slug')
+        .inTable('category')
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
       table.timestamps()

@@ -4,71 +4,55 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const User = use('App/Models/User');
+const Category = use('App/Models/Category');
 
 /**
- * Resourceful controller for interacting with users
+ * Resourceful controller for interacting with categories
  */
-class UserController {
+class CategoryController {
   /**
-   * Show a list of all users.
-   * GET users
+   * Show a list of all categories.
+   * GET categories
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index () {
-
-    const users = await User.all();
-
-    return users;
-
+  async index ({ request, response, view }) {
   }
 
   /**
-   * Makes user login
-   * POST users/login
+   * Render a form to be used for creating a new category.
+   * GET categories/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async login ({ request, auth }) {
-    const { email, password } = request.post();
-
-    const token = await auth.attempt(email, password)
-
-    const user = await User.findBy('email', email)
-
-    return {token, user: { username: user.username, email: user.email, description: user.description }}
-
+  async create ({ request, response, view }) {
   }
 
   /**
-   * Create/save a new user.
-   * POST users
+   * Create/save a new category.
+   * POST categories
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, auth }) {
+  async store ({ request }) {
 
     const data = request.post()
-    const user = await User.create({ ...data })
-
-    const token = await auth.attempt(data.email, data.password)
-
-    return {token, user}
+    const category = await Category.create({ ...data });
+    return category;
 
   }
 
   /**
-   * Display a single user.
-   * GET users/:id
+   * Display a single category.
+   * GET categories/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -79,8 +63,8 @@ class UserController {
   }
 
   /**
-   * Render a form to update an existing user.
-   * GET users/:id/edit
+   * Render a form to update an existing category.
+   * GET categories/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -91,8 +75,8 @@ class UserController {
   }
 
   /**
-   * Update user details.
-   * PUT or PATCH users/:id
+   * Update category details.
+   * PUT or PATCH categories/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -102,15 +86,15 @@ class UserController {
   }
 
   /**
-   * Delete a user with id.
-   * DELETE users/:id
+   * Delete a category with id.
+   * DELETE categories/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ request, auth }) {
+  async destroy ({ params, request, response }) {
   }
 }
 
-module.exports = UserController
+module.exports = CategoryController

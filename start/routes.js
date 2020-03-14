@@ -23,4 +23,8 @@ Route.group(() => {
 
 Route.group(() => {
   Route.resource("", "RoadmapController").apiOnly();
-}).prefix("roadmap")
+}).prefix("roadmaps")
+
+Route.group(() => {
+  Route.resource("", "CategoryController").apiOnly();
+}).prefix("category")
