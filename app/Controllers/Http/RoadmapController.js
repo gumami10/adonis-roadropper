@@ -21,7 +21,12 @@ class RoadmapController {
    */
   async index () {
 
-    const roadmaps = await Roadmap.query().orderBy('id', 'desc').fetch()
+    const roadmaps = await Roadmap
+      .query()
+      .with('user')
+      .setHidden(['password'])
+      .orderBy('id', 'desc')
+      .fetch()
 
     return roadmaps
 
@@ -35,11 +40,15 @@ class RoadmapController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request }) {
+  async store ({ auth, request }) {
     const data = request.post()
-    const roadmap = await Roadmap.create({ ...data, moderation: 0, creator: 0, category: 'others', subject: 'Other' })
-    return roadmap
 
+    try {
+      const user = await auth.getUser()
+      await Roadmap.create({ ...data, moderation: 0, creator: user.id, category: 'others', subject: 'Other' })
+    } catch(e) {
+      console.log('Erro: ', e)
+    }
   }
 
   /**
@@ -51,7 +60,13 @@ class RoadmapController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    try {
+      return await Roadmap.findOrFail(params.id)
+    } catch(e) {
+      console.log('Erro: ', e)
+    }
+
   }
 
   /**
