@@ -47,7 +47,7 @@ class RoadmapController {
       const user = await auth.getUser()
       await Roadmap.create({ ...data, moderation: 0, creator: user.id, category: 'others', subject: 'Other' })
     } catch(e) {
-      console.log('aldair', e)
+      console.log('Erro: ', e)
     }
   }
 
