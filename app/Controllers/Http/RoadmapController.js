@@ -64,7 +64,7 @@ class RoadmapController {
     try {
       return await Roadmap.findOrFail(params.id)
     } catch(e) {
-      console.log('aldair', e)
+      console.log('Erro: ', e)
     }
 
   }
