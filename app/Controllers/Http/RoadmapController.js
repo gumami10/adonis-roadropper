@@ -60,7 +60,13 @@ class RoadmapController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    try {
+      return await Roadmap.findOrFail(params.id)
+    } catch(e) {
+      console.log('aldair', e)
+    }
+
   }
 
   /**
